@@ -30,6 +30,7 @@
 #include "G4VProcess.hh"
 #include "Randomize.hh"
 
+#include "G4VSolid.hh"
 
 // Select phonon mode using density of states in material
 
@@ -168,6 +169,10 @@ void G4CMP::FillHit(const G4Step* step, G4CMPElectrodeHit* hit) {
   G4StepPoint* postStepPoint = step->GetPostStepPoint();
   G4ThreeVector startPosition = track->GetVertexPosition();
   G4ThreeVector finalPosition = postStepPoint->GetPosition();
+
+  //G4VPhysicalVolume* physVol = postStepPoint->GetPhysicalVolume();
+  G4TouchableHandle touchHand = postStepPoint->GetTouchableHandle();
+  touchHand->GetSolid()->DumpInfo();
 
   // Insert data into hit.
   hit->SetStartTime(startTime);
