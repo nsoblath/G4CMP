@@ -12,7 +12,7 @@
 
 if [ -z "$CMAKE_COMMAND" ]; then
   ISCMAKEBUILD=1
-  export G4CMPINSTALL=@CMAKE_INSTALL_PREFIX@
+  export G4CMPINSTALL=@CMAKE_INSTALL_PREFIX@/share/G4CMP
 else
   ISCMAKEBUILD=0
   export G4CMPINSTALL=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
@@ -33,7 +33,7 @@ if [ ! ISCMAKEBUILD ]; then
   export G4CMPLIB=$G4WORKDIR/lib/$G4SYSTEM
   export G4CMPINCLUDE=$G4CMPINSTALL/library/include
 else
-  topdir=$(dirname $(dirname $G4CMPINSTALL))
+  topdir=@CMAKE_INSTALL_PREFIX@
   export G4CMPLIB=$topdir/lib
   export G4CMPINCLUDE=$topdir/include/G4CMP
 fi
