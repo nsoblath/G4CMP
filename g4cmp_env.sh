@@ -10,14 +10,14 @@
 
 # Identify location of script from user command (c.f. geant4make.sh)
 
-if [ -z "$G4CMPINSTALL" ]; then
-  if [ -n "$BASH_VERSION" ]; then
-    g4cmp_dir=$(dirname ${BASH_ARGV[0]})
-    export G4CMPINSTALL=$(cd $g4cmp_dir > /dev/null; pwd)
-  elif [ -f g4cmp_env.sh ]; then
-    export G4CMPINSTALL=$(pwd)
-  fi
+if [ -z "$CMAKE_COMMAND" ]; then
+  ISCMAKEBUILD=1
+  export G4CMPINSTALL=@CMAKE_INSTALL_PREFIX@
+else
+  ISCMAKEBUILD=0
+  export G4CMPINSTALL=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 fi
+echo $G4CMPINSTALL
 
 # Ensure that G4CMP installation is known
 
@@ -29,10 +29,10 @@ fi
 
 # If running script from source directory, assume GMake build
 
-if [ -r $G4CMPINSTALL/README.md ]; then
+if [ ! ISCMAKEBUILD ]; then
   export G4CMPLIB=$G4WORKDIR/lib/$G4SYSTEM
   export G4CMPINCLUDE=$G4CMPINSTALL/library/include
-elif [ $(basename $(dirname $G4CMPINSTALL)) = "share" ]; then
+else
   topdir=$(dirname $(dirname $G4CMPINSTALL))
   export G4CMPLIB=$topdir/lib
   export G4CMPINCLUDE=$topdir/include/G4CMP

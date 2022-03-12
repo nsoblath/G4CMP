@@ -48,6 +48,11 @@ option(BUILD_G4CMP_TESTS "Build unit tests for classes.  Default: OFF" OFF)
 option(INSTALL_EXAMPLES "Copy examples directories to installation area. Default: OFF" OFF)
 
 #-----------------------------------------------------------------------------
+# Fill in the env scripts
+#
+configure_file(g4cmp_env.sh ${CMAKE_CURRENT_BINARY_DIR}/g4cmp_env.sh @ONLY)
+
+#-----------------------------------------------------------------------------
 # Add subdirectories based on options selected
 #
 add_subdirectory(library)
