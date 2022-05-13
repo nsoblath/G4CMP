@@ -23,6 +23,7 @@
 #ifndef G4CMPBoundaryUtils_hh
 #define G4CMPBoundaryUtils_hh 1
 
+#include "G4CMPVTrackInfo.hh"
 #include "globals.hh"
 #include "G4ThreeVector.hh"
 #include <map>

@@ -40,15 +40,16 @@ public:
     kNoMatTable,
     kElectrodeAbsorption,
     kMaxReflections,
-    kTransmission
-  }
-  CauseOfDeath GetCauseOfDeath() const                  { return causeOfDeath: }
+    kTransmission,
+    kReflectionFailed
+  };
+  CauseOfDeath GetCauseOfDeath() const                  { return causeOfDeath; }
   void SetCauseOfDeath(CauseOfDeath aCause)           { causeOfDeath = aCause; }
 
 private:
   size_t reflCount = 0; // Number of times track has been reflected
   const G4LatticePhysical* lattice; // The lattice the track is currently in
-  CauseOfDeath causeOfDeath = kNotDeadYet; // To track what caused a track to die
+  CauseOfDeath causeOfDeath = CauseOfDeath::kNotDeadYet; // To track what caused a track to die
 };
 
 #endif
