@@ -74,7 +74,8 @@ public:
 
   virtual G4bool MaximumReflections(const G4Track& aTrack) const;
   virtual void DoSimpleKill(const G4Track& aTrack, const G4Step& aStep,
-			    G4ParticleChange& aParticleChange);
+			    G4ParticleChange& aParticleChange,
+          G4CMPVTrackInfo::CauseOfDeath aCause);
 
   // NOTE:  Transmission is called only if absorption, reflection both fail
   virtual void DoTransmission(const G4Track& aTrack, const G4Step& aStep,

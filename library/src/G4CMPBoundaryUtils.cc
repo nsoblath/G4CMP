@@ -274,16 +274,24 @@ G4CMPBoundaryUtils::ApplyBoundaryAction(const G4Track& aTrack,
   aParticleChange.Initialize(aTrack);
 
   if (!matTable) {
-    DoSimpleKill(aTrack, aStep, aParticleChange);
+    // phonon dies because material isn't setup to transmit or be sensitive to phonons
+    DoSimpleKill(aTrack, aStep, aParticleChange, G4CMPVTrackInfo::CauseOfDeath::kNoMatTable);
   } else if (electrode && electrode->IsNearElectrode(aStep)) {
+    // phonon dies as it's absorbed at an electrode
     electrode->AbsorbAtElectrode(aTrack, aStep, aParticleChange);
-  } else if (AbsorbTrack(aTrack, aStep)) {
+  } else if (AbsorbTrack(aTrack, aStep)) { // throws random number to determine if absorbed
+    // phonon dies because it's absorbed (not at an electrode, presumably)
+    // killed by setting proposed track status to stop-and-kill in aParticleChange
     DoAbsorption(aTrack, aStep, aParticleChange);
-  } else if (MaximumReflections(aTrack)) {
-    DoSimpleKill(aTrack, aStep, aParticleChange);
-  } else if (ReflectTrack(aTrack, aStep)) {
+  } else if (MaximumReflections(aTrack)) { // checks if maximum number of reflections has been passed
+    // phonon dies because it's reached the maximum number of reflections
+    DoSimpleKill(aTrack, aStep, aParticleChange, G4CMPVTrackInfo::CauseOfDeath::kMaxReflections);
+  } else if (ReflectTrack(aTrack, aStep)) { // throws random number to determine if reflects
+    // phonon is reflected and continues living
+    // gets normal to surface at step location, reflects about the normal, and changes direction accordingly
     DoReflection(aTrack, aStep, aParticleChange);
-  } else {
+  } else { // with probability 1-reflection
+    // phonon is transmitted: killed
     DoTransmission(aTrack, aStep, aParticleChange);
   }
 }
@@ -349,10 +357,14 @@ void G4CMPBoundaryUtils::DoReflection(const G4Track& aTrack,
   aParticleChange.ProposeMomentumDirection(pdir);
 }
 
-void G4CMPBoundaryUtils::DoSimpleKill(const G4Track& /*aTrack*/,
+void G4CMPBoundaryUtils::DoSimpleKill(const G4Track& aTrack,
 				      const G4Step& /*aStep*/,
-				      G4ParticleChange& aParticleChange) {
+				      G4ParticleChange& aParticleChange,
+              G4CMPVTrackInfo::CauseOfDeath aCause) {
   if (buVerboseLevel>1) G4cout << procName << ": Track killed" << G4endl;
+
+  auto trackInfo = G4CMP::GetTrackInfo<G4CMPVTrackInfo>(aTrack);
+  trackInfo->SetCauseOfDeath(aCause);
 
   aParticleChange.ProposeTrackStatus(fStopAndKill);
 }
@@ -368,7 +380,7 @@ G4CMPBoundaryUtils::DoTransmission(const G4Track& aTrack,
   if (buVerboseLevel>1)
     G4cout << procName << ": Track transmission requested" << G4endl;
 
-  DoSimpleKill(aTrack, aStep, aParticleChange);
+  DoSimpleKill(aTrack, aStep, aParticleChange, G4CMPVTrackInfo::CauseOfDeath::kTransmission);
 }
 
 
