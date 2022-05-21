@@ -34,14 +34,14 @@ public:
   virtual void Print() const override;
 
   enum class CauseOfDeath {
-    kNotDeadYet,
-    kUnknown,
-    kOther,
-    kNoMatTable,
-    kElectrodeAbsorption,
-    kMaxReflections,
-    kTransmission,
-    kReflectionFailed
+    kNotDeadYet = 0,
+    kUnknown = 10,
+    kOther = 100,
+    kNoMatTable = 101,
+    kElectrodeAbsorption = 102,
+    kMaxReflections = 103,
+    kTransmission = 104,
+    kReflectionFailed = 105
   };
   CauseOfDeath GetCauseOfDeath() const                  { return causeOfDeath; }
   void SetCauseOfDeath(CauseOfDeath aCause)           { causeOfDeath = aCause; }
