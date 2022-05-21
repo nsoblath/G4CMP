@@ -33,7 +33,7 @@ public:
 
   virtual void Print() const override;
 
-  enum class CauseOfDeath {
+  enum class CauseOfDeath : unsigned {
     kNotDeadYet = 0,
     kUnknown = 10,
     kOther = 100,
