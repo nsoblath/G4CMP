@@ -40,7 +40,7 @@ public:
     kNoMatTable = 101,
     kElectrodeAbsorption = 102,
     kMaxReflections = 103,
-    kTransmission = 104,
+    kDefaultTransmission = 104,
     kReflectionFailed = 105
   };
   CauseOfDeath GetCauseOfDeath() const                  { return causeOfDeath; }

@@ -380,7 +380,7 @@ G4CMPBoundaryUtils::DoTransmission(const G4Track& aTrack,
   if (buVerboseLevel>1)
     G4cout << procName << ": Track transmission requested" << G4endl;
 
-  DoSimpleKill(aTrack, aStep, aParticleChange, G4CMPVTrackInfo::CauseOfDeath::kTransmission);
+  DoSimpleKill(aTrack, aStep, aParticleChange, G4CMPVTrackInfo::CauseOfDeath::kDefaultTransmission);
 }
 
 
