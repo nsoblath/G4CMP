@@ -58,8 +58,8 @@ public:
   void SetParticleName(G4String name) { particleName = name; }
   G4String GetParticleName() const { return particleName; }
 
-  void SetCauseOfDeath(G4CMPVTrackInfo::CauseOfDeath aCause) { causeOfDeath = aCause; }
-  G4CMPVTrackInfo::CauseOfDeath GetCauseOfDeath() const { return causeOfDeath; }
+  void SetBoundaryTermination(G4CMPVTrackInfo::BoundaryTermination aBT) { boundaryTerm = aBT; }
+  G4CMPVTrackInfo::BoundaryTermination GetBoundaryTermination() const { return boundaryTerm; }
 
 private:
   G4double startTime;
@@ -71,7 +71,7 @@ private:
   G4ThreeVector finalPos;
   G4int trackID;
   G4String particleName;
-  G4CMPVTrackInfo::CauseOfDeath causeOfDeath;
+  G4CMPVTrackInfo::BoundaryTermination boundaryTerm;
 };
 
 typedef G4THitsCollection<G4CMPElectrodeHit> G4CMPElectrodeHitsCollection;

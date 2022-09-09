@@ -164,7 +164,7 @@ void G4CMP::FillHit(const G4Step* step, G4CMPElectrodeHit* hit) {
   G4double edp       = step->GetNonIonizingEnergyDeposit();
 
   auto trackInfo = G4CMP::GetTrackInfo<G4CMPVTrackInfo>(aTrack);
-  G4CMPVTrackInfo::CauseOfDeath cod = trackInfo->GetCauseOfDeath();
+  G4CMPVTrackInfo::BoundaryTermination bt = trackInfo->GetBoundaryTermination();
 
   // Get start and end positions. Must use PreStepPoint to get correct
   // volume
@@ -182,7 +182,7 @@ void G4CMP::FillHit(const G4Step* step, G4CMPElectrodeHit* hit) {
   hit->SetFinalPosition(finalPosition);
   hit->SetTrackID(trackID);
   hit->SetParticleName(name);
-  hit->SetCauseOfDeath(cod);
+  hit->SetBoundaryTermination(bt);
 }
 
 

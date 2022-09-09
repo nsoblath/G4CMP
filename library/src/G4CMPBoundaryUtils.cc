@@ -275,7 +275,7 @@ G4CMPBoundaryUtils::ApplyBoundaryAction(const G4Track& aTrack,
 
   if (!matTable) {
     // phonon dies because material isn't setup to transmit or be sensitive to phonons
-    DoSimpleKill(aTrack, aStep, aParticleChange, G4CMPVTrackInfo::CauseOfDeath::kNoMatTable);
+    DoSimpleKill(aTrack, aStep, aParticleChange, G4CMPVTrackInfo::BoundaryTermination::kNoMatTable);
   } else if (electrode && electrode->IsNearElectrode(aStep)) {
     // phonon dies as it's absorbed at an electrode
     electrode->AbsorbAtElectrode(aTrack, aStep, aParticleChange);
@@ -285,7 +285,7 @@ G4CMPBoundaryUtils::ApplyBoundaryAction(const G4Track& aTrack,
     DoAbsorption(aTrack, aStep, aParticleChange);
   } else if (MaximumReflections(aTrack)) { // checks if maximum number of reflections has been passed
     // phonon dies because it's reached the maximum number of reflections
-    DoSimpleKill(aTrack, aStep, aParticleChange, G4CMPVTrackInfo::CauseOfDeath::kMaxReflections);
+    DoSimpleKill(aTrack, aStep, aParticleChange, G4CMPVTrackInfo::BoundaryTermination::kMaxReflections);
   } else if (ReflectTrack(aTrack, aStep)) { // throws random number to determine if reflects
     // phonon is reflected and continues living
     // gets normal to surface at step location, reflects about the normal, and changes direction accordingly
@@ -360,11 +360,11 @@ void G4CMPBoundaryUtils::DoReflection(const G4Track& aTrack,
 void G4CMPBoundaryUtils::DoSimpleKill(const G4Track& aTrack,
 				      const G4Step& /*aStep*/,
 				      G4ParticleChange& aParticleChange,
-              G4CMPVTrackInfo::CauseOfDeath aCause) {
+              G4CMPVTrackInfo::BoundaryTermination aBT) {
   if (buVerboseLevel>1) G4cout << procName << ": Track killed" << G4endl;
 
   auto trackInfo = G4CMP::GetTrackInfo<G4CMPVTrackInfo>(aTrack);
-  trackInfo->SetCauseOfDeath(aCause);
+  trackInfo->SetBoundaryTermination(aBT);
 
   aParticleChange.ProposeTrackStatus(fStopAndKill);
 }
@@ -380,7 +380,7 @@ G4CMPBoundaryUtils::DoTransmission(const G4Track& aTrack,
   if (buVerboseLevel>1)
     G4cout << procName << ": Track transmission requested" << G4endl;
 
-  DoSimpleKill(aTrack, aStep, aParticleChange, G4CMPVTrackInfo::CauseOfDeath::kDefaultTransmission);
+  DoSimpleKill(aTrack, aStep, aParticleChange, G4CMPVTrackInfo::BoundaryTermination::kDefaultTransmission);
 }
 
 

@@ -33,8 +33,8 @@ public:
 
   virtual void Print() const override;
 
-  enum class CauseOfDeath : unsigned {
-    kNotDeadYet = 0,
+  enum class BoundaryTermination : unsigned {
+    kNone = 0,
     kUnknown = 10,
     kOther = 100,
     kNoMatTable = 101,
@@ -43,13 +43,13 @@ public:
     kDefaultTransmission = 104,
     kReflectionFailed = 105
   };
-  CauseOfDeath GetCauseOfDeath() const                  { return causeOfDeath; }
-  void SetCauseOfDeath(CauseOfDeath aCause)           { causeOfDeath = aCause; }
+  BoundaryTermination GetBoundaryTermination() const                  { return boundaryTerm; }
+  void SetBoundaryTermination(BoundaryTermination aBT)           { boundaryTerm = aBT; }
 
 private:
   size_t reflCount = 0; // Number of times track has been reflected
   const G4LatticePhysical* lattice; // The lattice the track is currently in
-  CauseOfDeath causeOfDeath = CauseOfDeath::kNotDeadYet; // To track what caused a track to die
+  BoundaryTermination boundaryTerm = BoundaryTermination::kNone; // To track what caused a track to die
 };
 
 #endif
