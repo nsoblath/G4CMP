@@ -274,24 +274,25 @@ G4CMPBoundaryUtils::ApplyBoundaryAction(const G4Track& aTrack,
   aParticleChange.Initialize(aTrack);
 
   if (!matTable) {
-    // phonon dies because material isn't setup to transmit or be sensitive to phonons
+    // particle dies because material isn't setup to transmit or be sensitive to phonons
     DoSimpleKill(aTrack, aStep, aParticleChange, G4CMPVTrackInfo::BoundaryTermination::kNoMatTable);
   } else if (electrode && electrode->IsNearElectrode(aStep)) {
-    // phonon dies as it's absorbed at an electrode
+    // particle dies as it's absorbed at an electrode
+    trackInfo->SetBoundaryTermination(G4CMPVTrackInfo::BoundaryTermination::kElectrodeAbsorption);
     electrode->AbsorbAtElectrode(aTrack, aStep, aParticleChange);
   } else if (AbsorbTrack(aTrack, aStep)) { // throws random number to determine if absorbed
-    // phonon dies because it's absorbed (not at an electrode, presumably)
+    // particle dies because it's absorbed (not at an electrode, presumably)
     // killed by setting proposed track status to stop-and-kill in aParticleChange
     DoAbsorption(aTrack, aStep, aParticleChange);
   } else if (MaximumReflections(aTrack)) { // checks if maximum number of reflections has been passed
-    // phonon dies because it's reached the maximum number of reflections
+    // particle dies because it's reached the maximum number of reflections
     DoSimpleKill(aTrack, aStep, aParticleChange, G4CMPVTrackInfo::BoundaryTermination::kMaxReflections);
   } else if (ReflectTrack(aTrack, aStep)) { // throws random number to determine if reflects
-    // phonon is reflected and continues living
+    // particle is reflected and continues living
     // gets normal to surface at step location, reflects about the normal, and changes direction accordingly
     DoReflection(aTrack, aStep, aParticleChange);
   } else { // with probability 1-reflection
-    // phonon is transmitted: killed
+    // particle is transmitted: killed
     DoTransmission(aTrack, aStep, aParticleChange);
   }
 }
