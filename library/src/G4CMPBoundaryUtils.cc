@@ -278,7 +278,7 @@ G4CMPBoundaryUtils::ApplyBoundaryAction(const G4Track& aTrack,
     DoSimpleKill(aTrack, aStep, aParticleChange, G4CMPVTrackInfo::BoundaryTermination::kNoMatTable);
   } else if (electrode && electrode->IsNearElectrode(aStep)) {
     // particle dies as it's absorbed at an electrode
-    trackInfo->SetBoundaryTermination(G4CMPVTrackInfo::BoundaryTermination::kElectrodeAbsorption);
+    aTrack->SetBoundaryTermination(G4CMPVTrackInfo::BoundaryTermination::kElectrodeAbsorption);
     electrode->AbsorbAtElectrode(aTrack, aStep, aParticleChange);
   } else if (AbsorbTrack(aTrack, aStep)) { // throws random number to determine if absorbed
     // particle dies because it's absorbed (not at an electrode, presumably)
