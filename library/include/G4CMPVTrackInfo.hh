@@ -45,7 +45,7 @@ public:
   };
   BoundaryTermination GetBoundaryTermination() const                  { return boundaryTerm; }
   void SetBoundaryTermination(BoundaryTermination aBT)           { boundaryTerm = aBT; }
-  std::string ToString( BoundaryTermination term );
+  std::string GetBoundaryTerminationStr();
 
 private:
   size_t reflCount = 0; // Number of times track has been reflected

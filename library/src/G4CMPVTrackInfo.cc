@@ -23,9 +23,9 @@ void G4CMPVTrackInfo::Print() const {
 //TODO
 }
 
-std::string G4CMPVTrackInfo::ToString( BoundaryTermination term )
+std::string G4CMPVTrackInfo::GetBoundaryTerminationStr()
 {
-  switch (term) {
+  switch (boundaryTerm) {
     case BoundaryTermination::kNone: return "None";
     case BoundaryTermination::kUnknown: return "Unknown";
     case BoundaryTermination::kOther: return "Other";
@@ -36,4 +36,5 @@ std::string G4CMPVTrackInfo::ToString( BoundaryTermination term )
     case BoundaryTermination::kReflectionFailed: return "ReflectionFailed";
     default: G4Exception("G4CMPVTrackInfo::ToString()", "InvalidEnum", FatalException, "An invalid BoundaryTermination enum was encountered");
   }
+  return string(); // to avoid warnings about reaching the end of a non-void function
 }
