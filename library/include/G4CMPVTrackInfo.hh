@@ -33,9 +33,24 @@ public:
 
   virtual void Print() const override;
 
+  enum class BoundaryTermination : unsigned {
+    kNone = 0,
+    kUnknown = 10,
+    kOther = 100,
+    kNoMatTable = 101,
+    kElectrodeAbsorption = 102,
+    kMaxReflections = 103,
+    kDefaultTransmission = 104,
+    kReflectionFailed = 105
+  };
+  BoundaryTermination GetBoundaryTermination() const                  { return boundaryTerm; }
+  void SetBoundaryTermination(BoundaryTermination aBT)           { boundaryTerm = aBT; }
+  std::string GetBoundaryTerminationStr();
+
 private:
   size_t reflCount = 0; // Number of times track has been reflected
   const G4LatticePhysical* lattice; // The lattice the track is currently in
+  BoundaryTermination boundaryTerm = BoundaryTermination::kNone; // To track what caused a track to die
 };
 
 #endif

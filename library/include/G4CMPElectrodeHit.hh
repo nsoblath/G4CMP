@@ -13,6 +13,7 @@
 #include "G4THitsCollection.hh"
 #include "G4Allocator.hh"
 #include "G4ThreeVector.hh"
+#include "G4CMPVTrackInfo.hh"
 
 class G4AttDef;
 class G4AttValue;
@@ -57,6 +58,9 @@ public:
   void SetParticleName(G4String name) { particleName = name; }
   G4String GetParticleName() const { return particleName; }
 
+  void SetBoundaryTermination(G4CMPVTrackInfo::BoundaryTermination aBT) { boundaryTerm = aBT; }
+  G4CMPVTrackInfo::BoundaryTermination GetBoundaryTermination() const { return boundaryTerm; }
+
 private:
   G4double startTime;
   G4double finalTime;
@@ -67,6 +71,7 @@ private:
   G4ThreeVector finalPos;
   G4int trackID;
   G4String particleName;
+  G4CMPVTrackInfo::BoundaryTermination boundaryTerm;
 };
 
 typedef G4THitsCollection<G4CMPElectrodeHit> G4CMPElectrodeHitsCollection;

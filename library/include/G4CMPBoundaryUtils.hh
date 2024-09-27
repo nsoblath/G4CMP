@@ -23,6 +23,7 @@
 #ifndef G4CMPBoundaryUtils_hh
 #define G4CMPBoundaryUtils_hh 1
 
+#include "G4CMPVTrackInfo.hh"
 #include "globals.hh"
 #include "G4ThreeVector.hh"
 #include <map>
@@ -74,7 +75,8 @@ public:
 
   virtual G4bool MaximumReflections(const G4Track& aTrack) const;
   virtual void DoSimpleKill(const G4Track& aTrack, const G4Step& aStep,
-			    G4ParticleChange& aParticleChange);
+			    G4ParticleChange& aParticleChange,
+          G4CMPVTrackInfo::BoundaryTermination aBT);
 
   // NOTE:  Transmission is called only if absorption, reflection both fail
   virtual void DoTransmission(const G4Track& aTrack, const G4Step& aStep,

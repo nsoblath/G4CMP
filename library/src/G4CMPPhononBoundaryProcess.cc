@@ -219,7 +219,7 @@ DoReflection(const G4Track& aTrack, const G4Step& aStep,
   if (!G4CMP::PhononVelocityIsInward(theLattice,mode,reflectedKDir,surfNorm)) {
     G4Exception((GetProcessName()+"::DoReflection").c_str(), "Boundary010",
 		JustWarning, ("Phonon "+refltype+" reflection failed").c_str());
-    DoSimpleKill(aTrack, aStep, aParticleChange);
+    DoSimpleKill(aTrack, aStep, aParticleChange, G4CMPVTrackInfo::BoundaryTermination::kReflectionFailed);
     return;
   }
 

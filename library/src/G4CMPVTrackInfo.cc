@@ -14,10 +14,27 @@
 // 20161111 Initial commit - R. Agnese
 
 #include "G4CMPVTrackInfo.hh"
+#include "G4Exception.hh"
 
 G4CMPVTrackInfo::G4CMPVTrackInfo(const G4LatticePhysical* lat) :
   G4VAuxiliaryTrackInformation(), lattice(lat) {}
 
 void G4CMPVTrackInfo::Print() const {
 //TODO
+}
+
+std::string G4CMPVTrackInfo::GetBoundaryTerminationStr()
+{
+  switch (boundaryTerm) {
+    case BoundaryTermination::kNone: return "None";
+    case BoundaryTermination::kUnknown: return "Unknown";
+    case BoundaryTermination::kOther: return "Other";
+    case BoundaryTermination::kNoMatTable: return "NoMatTable";
+    case BoundaryTermination::kElectrodeAbsorption: return "ElectrodeAbsorption";
+    case BoundaryTermination::kMaxReflections: return "MaxReflections";
+    case BoundaryTermination::kDefaultTransmission: return "DefaultTransmission";
+    case BoundaryTermination::kReflectionFailed: return "ReflectionFailed";
+    default: G4Exception("G4CMPVTrackInfo::ToString()", "InvalidEnum", FatalException, "An invalid BoundaryTermination enum was encountered");
+  }
+  return string(); // to avoid warnings about reaching the end of a non-void function
 }
